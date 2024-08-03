@@ -43,7 +43,7 @@ app.use(flash());
 const userSchema = new mongoose.Schema({
     username: String,
     password: String,
-    email: { type: String, required: true, unique: true },
+    email: { type: String, required: false, unique: true },
     isEmailVerified: { type: Boolean, default: false },
     emailVerificationToken: String,
     googleId: String,
