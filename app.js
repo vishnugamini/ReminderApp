@@ -162,6 +162,20 @@ app.get('/verify-email', async (req, res) => {
         res.status(500).send('Error verifying email');
     }
 });
+// Route to update user's email
+app.post('/saveemail', isAuthenticated, async (req, res) => {
+    const newEmail = req.body.email;
+
+    try {
+        // Find the user by their ID and update their email
+        await User.findByIdAndUpdate(req.user._id, { email: newEmail }, { new: true });
+        res.status(200).send('Email updated successfully');
+    } catch (error) {
+        console.error('Error updating email:', error);
+        res.status(500).send('Error updating email');
+    }
+});
+
 
 app.post('/newtodo', isAuthenticated, async (req, res) => {
     const { task, dueDate, dueTime } = req.body;
