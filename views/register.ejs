@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" type="text/css" href="register.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="register-card">
+            <h1>Register</h1>
+            <form action="/register" method="POST">
+                <div class="input-container">
+                    <label for="username"><i class="fa fa-user"></i> Username:</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="input-container">
+                    <label for="password"><i class="fa fa-lock"></i> Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit">Register</button>
+            </form>
+            <button class="google-btn" onclick="window.location.href='/auth/google'">
+                <i class="fa fa-google"></i> Register with Google
+            </button>
+            <button class="login-btn" onclick="window.location.href='/login'">Login</button>
+        </div>
+    </div>
+</body>
+</html>

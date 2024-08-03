@@ -1,0 +1,227 @@
+/* General Styles */
+body {
+    background: linear-gradient(135deg, #2d2d2d, #1c1c1c);
+    color: #fff;
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.email-widget {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.outer {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    text-align: center;
+}
+
+.header {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.form-control {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: #fff;
+}
+
+.input-group {
+    margin-bottom: 30px;
+}
+
+.add-btn {
+    background: linear-gradient(135deg, #4caf50, #388e3c);
+    border: none;
+    border-radius: 25px;
+    color: #fff;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.add-btn:hover {
+    background: linear-gradient(135deg, #388e3c, #4caf50);
+}
+
+.inner ul {
+    padding: 0;
+    list-style: none;
+}
+
+.inner li {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.3s;
+}
+
+.inner li:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.checkbox {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #fff;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.todo-item {
+    flex-grow: 1;
+    margin-right: 20px;
+}
+
+.todo-actions a {
+    margin-left: 10px;
+    color: #fff;
+    transition: color 0.3s;
+}
+
+.todo-actions a:hover {
+    color: #ff5252;
+}
+
+.due-date {
+    margin-right: 10px;
+    font-size: 0.8rem;
+    color: #bbb;
+}
+
+.btnHide {
+    background: linear-gradient(135deg, #ff5252, #e53935);
+    border: none;
+    border-radius: 25px;
+    color: #fff;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-top: 10px; /* Added margin for spacing */
+}
+
+.btnHide:hover {
+    background: linear-gradient(135deg, #e53935, #ff5252);
+}
+
+.footer {
+    text-align: center;
+    margin-top: 20px;
+    color: #bbb;
+    position: fixed;
+    bottom: 10px;
+    width: 100%;
+}
+
+.footer a {
+    color: #bbb;
+    text-decoration: none;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+.review {
+    background: linear-gradient(135deg, #4caf50, #388e3c);
+    border: none;
+    border-radius: 25px;
+    color: #fff;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background 0.3s;
+    text-decoration: none;
+    margin-top: 20px;
+}
+
+.review:hover {
+    background: linear-gradient(135deg, #388e3c, #4caf50);
+}
+
+.logout-btn {
+    background: linear-gradient(135deg, #ff9800, #f57c00);
+    border: none;
+    border-radius: 25px;
+    color: #fff;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background 0.3s;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 20px;
+}
+
+.logout-btn:hover {
+    background: linear-gradient(135deg, #f57c00, #ff9800);
+}
+
+/* New styles for email input */
+.email-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.email-input {
+    margin-bottom: 5px;
+    width: 250px; /* Adjust width as needed */
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.email-input:disabled {
+    background: #6c757d;
+}
+
+.save-btn {
+    background: linear-gradient(135deg, #28a745, #218838); /* Green */
+    border: none;
+    border-radius: 25px;
+    color: #fff;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-top: 10px;
+}
+
+.edit-btn {
+    background: linear-gradient(135deg, #dc3545, #c82333); /* Red */
+    border: none;
+    border-radius: 25px;
+    color: #fff;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-top: 10px;
+}
+
+.save-btn:hover {
+    background: linear-gradient(135deg, #218838, #28a745);
+}
+
+.edit-btn:hover {
+    background: linear-gradient(135deg, #c82333, #dc3545);
+}

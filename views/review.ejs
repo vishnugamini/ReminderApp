@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit a Review</title>
+    <link rel="stylesheet" href="review.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="review-card">
+            <h1>Submit a Review</h1>
+            <form action="/submit-review" method="POST">
+                <div class="input-container">
+                    <label for="username"><i class="fa fa-user"></i> Username:</label>
+                    <input type="text" id="username" name="username" value="<%= username %>" readonly>
+                </div>
+                <div class="input-container">
+                    <label for="review"><i class="fa fa-comment"></i> Review:</label>
+                    <textarea id="review" name="review" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Submit Review</button>
+            </form>
+            <button class="back-btn" onclick="history.back()">Back</button>
+        </div>
+    </div>
+</body>
+</html>

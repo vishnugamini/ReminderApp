@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" type="text/css" href="login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="login-card">
+            <h1>Login</h1>
+            <form action="/login" method="post">
+                <div class="input-container">
+                    <label for="username"><i class="fa fa-user"></i> Username:</label>
+                    <input type="text" id="username" name="username" required><br>
+                </div>
+                <div class="input-container">
+                    <label for="password"><i class="fa fa-lock"></i> Password:</label>
+                    <input type="password" id="password" name="password" required><br>
+                </div>
+                <input type="submit" value="Login">
+            </form>
+            <button class="google-btn" onclick="window.location.href='/auth/google'">
+                <i class="fa fa-google"></i> Login with Google
+            </button>
+            <button onclick="window.location.href='/register'">Register</button>
+        </div>
+    </div>
+</body>
+</html>

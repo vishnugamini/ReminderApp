@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/style.css" type="text/css">
+
+    <title>TO-DO APP</title>
+</head>
+<body>
+    <!-- Email widget at the top -->
+    <div class="email-widget">
+        <div class="email-section">
+            <input id="email" class="form-control email-input" type="email" placeholder="Enter your email" name="email" required>
+            <small class="form-text text-muted">This will be used to send reminders about your tasks.</small>
+            <button id="save-email" class="btn save-btn">Save</button>
+            <button id="edit-email" class="btn edit-btn">Edit</button>
+        </div>
+    </div>
+
+    <div class="container outer">
+        <h1 class="header">TO-DO APP</h1>
+        
+        <form id="form" class="col-lg-6 col-8 mx-auto" action="/newtodo" method="POST">
+            <div class="input-group mb-3">
+                <input id="input" class="form-control" placeholder="Enter todo list item" value="" name="task" required>
+                <input id="date" class="form-control" type="date" name="dueDate">
+                <input id="time" class="form-control" type="time" name="dueTime">
+                <button id="btn" type="submit" class="btn add-btn">Add</button>
+            </div>
+        </form>
+
+        <div class="container inner">
+            <ul id="list" class="list col-lg-6 col-8 mx-auto">
+                <% for(var i=0; i<todoList.length; i++){ %>
+                    <li class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-items-center">
+                            <input type="checkbox" class="checkbox">
+                            <span class="todo-item"><%= todoList[i].name %></span>
+                        </div>
+                        <div class="d-flex align-items-center todo-actions">
+                            <% if (todoList[i].dueDate) { %>
+                                <span class="due-date"><%= todoList[i].dueDate %> <%= todoList[i].dueTime %></span>
+                            <% } %>
+                            <a href="#" class="edit" data-id="<%= todoList[i]._id %>">
+                                <i class="fa fa-pencil" aria-hidden="true" style="font-size:20px;color:black;"></i>
+                            </a>
+                            <a href="/delete/<%= todoList[i]._id %>" class="del"> 
+                                <i class="fa fa-trash" aria-hidden="true" style="font-size:20px;color:black;"></i>
+                            </a>
+                        </div>
+                    </li>
+                <% } %>
+            </ul>
+        </div>
+
+        <div class="container bottom">
+            <form id="form" action="/delAlltodo" method="POST">
+                <button id="btnClr" type="submit" class="btn mx-auto btnHide">Clear All</button>
+            </form>
+        </div>  
+        <a href="/review" class="review add-btn">Submit a Review</a>
+        <a href="/logout" class="logout-btn">Logout</a>
+        
+    </div>
+    <footer class="footer">
+        <p class="made-by">Made by Vishnu, <a href="mailto:gamini.vishnu@gmail.com">gamini.vishnu@gmail.com</a></p>
+    </footer>
+    <!-- JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Handle edit button click
+            $('.edit').on('click', function() {
+                var taskId = $(this).data('id');
+                var newName = prompt("Enter the new name:");
+                if (newName !== null && newName !== "") {
+                    $.ajax({
+                        type: "POST",
+                        url: "/updatetodo/" + taskId,
+                        data: { newName: newName },
+                        success: function(data) {
+                            window.location.reload();
+                        }
+                    });
+                }
+            });
+
+            // Save email functionality
+            $('#save-email').on('click', function() {
+                var email = $('#email').val();
+                if (email !== "") {
+                    $.ajax({
+                        type: "POST",
+                        url: "/saveemail",
+                        data: { email: email },
+                        success: function(data) {
+                            $('#email').prop('disabled', true).css('background', '#6c757d'); // Freeze email input and change background
+                            $('#save-email').hide();
+                            $('#edit-email').show();
+                            $('#save-email').removeClass('btn-danger').addClass('btn-success');
+                        },
+                        error: function() {
+                            $('#save-email').removeClass('btn-success').addClass('btn-danger');
+                        }
+                    });
+                }
+            });
+
+            // Edit email functionality
+            $('#edit-email').on('click', function() {
+                $('#email').prop('disabled', false).css('background', 'rgba(255, 255, 255, 0.2)'); // Enable email input and reset background
+                $('#edit-email').hide();
+                $('#save-email').show();
+                $('#save-email').removeClass('btn-success btn-danger');
+            });
+
+            // Initially hide edit button
+            $('#edit-email').hide();
+        });
+    </script>
+
+</body>
+</html>
