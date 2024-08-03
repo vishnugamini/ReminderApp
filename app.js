@@ -13,6 +13,7 @@ const cron = require('node-cron');
 const app = express();
 const port = process.env.PORT || 3000;
 
+// Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -21,11 +22,10 @@ mongoose.connect(process.env.MONGODB_URI, {
     socketTimeoutMS: 45000
 })
 .then(() => console.log('MongoDB connected'))
-.catch(err => console.log('MongoDB connection error:', err));
+.catch(err => console.error('MongoDB connection error:', err));
 
-
+// Middleware
 app.use(express.static(__dirname + '/public'));
-
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -37,9 +37,9 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
-
 app.use(flash());
 
+// Define Schemas and Models
 const userSchema = new mongoose.Schema({
     username: String,
     password: String,
@@ -69,6 +69,7 @@ const Review = mongoose.model("Review", reviewSchema);
 const User = mongoose.model("User", userSchema);
 const Todo = mongoose.model("Todo", todoSchema);
 
+// Configure Nodemailer
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -77,6 +78,7 @@ const transporter = nodemailer.createTransport({
     }
 });
 
+// Cron Job for Task Reminders
 cron.schedule('* * * * *', async () => {
     const now = new Date();
     const tenMinutesFromNow = new Date(now.getTime() + 10 * 60000);
@@ -99,7 +101,7 @@ cron.schedule('* * * * *', async () => {
 
         transporter.sendMail(mailOptions, (error, info) => {
             if (error) {
-                console.log('Error sending email:', error);
+                console.error('Error sending email:', error);
             } else {
                 console.log('Email sent:', info.response);
             }
@@ -107,6 +109,7 @@ cron.schedule('* * * * *', async () => {
     });
 });
 
+// Passport Configuration
 passport.use(new LocalStrategy(
     function(username, password, done) {
         User.findOne({ username: username }, function(err, user) {
@@ -128,10 +131,11 @@ passport.deserializeUser(function(id, done) {
     });
 });
 
+// Routes
 app.get("/", isAuthenticated, (req, res) => {
     Todo.find({ user: req.user._id }, (error, todoList) => {
         if (error) {
-            console.log(error);
+            console.error(error);
             res.status(500).send('Error fetching todo items');
         } else {
             res.render("index.ejs", { todoList: todoList });
@@ -172,7 +176,7 @@ app.post('/newtodo', isAuthenticated, async (req, res) => {
 });
 
 app.get('/logout', (req, res) => {
-    req.logout((err) => {
+    req.logout(err => {
         if (err) {
             return next(err);
         }
@@ -184,7 +188,7 @@ app.get("/delete/:id", isAuthenticated, (req, res) => {
     const taskId = req.params.id;
     Todo.deleteOne({ _id: taskId, user: req.user._id }, (err, result) => {
         if (err) {
-            console.log(`Error in deleting the task ${taskId}`);
+            console.error(`Error in deleting the task ${taskId}`);
             res.status(500).send('Error deleting task');
         } else {
             console.log("Task successfully deleted from database");
@@ -196,7 +200,7 @@ app.get("/delete/:id", isAuthenticated, (req, res) => {
 app.post("/delAlltodo", isAuthenticated, (req, res) => {
     Todo.deleteMany({ user: req.user._id }, (err, result) => {
         if (err) {
-            console.log(err);
+            console.error(err);
             res.status(500).send('Error deleting all tasks');
         } else {
             console.log(`Deleted all tasks`);
@@ -210,7 +214,7 @@ app.post("/submit-review", isAuthenticated, (req, res) => {
     const newReview = new Review({ username, review });
     newReview.save((err) => {
         if (err) {
-            console.log('Error saving review:', err);
+            console.error('Error saving review:', err);
             res.status(500).send('Error saving review');
         } else {
             console.log('Review saved successfully');
@@ -219,14 +223,13 @@ app.post("/submit-review", isAuthenticated, (req, res) => {
     });
 });
 
-
 app.post("/updatetodo/:id", isAuthenticated, (req, res) => {
     const taskId = req.params.id;
     const newName = req.body.newName;
 
     Todo.findOneAndUpdate({ _id: taskId, user: req.user._id }, { name: newName }, (err, updatedTodo) => {
         if (err) {
-            console.log(err);
+            console.error(err);
             res.status(500).send('Error updating task');
         } else {
             console.log("Task successfully updated");
@@ -245,11 +248,6 @@ app.post('/login', passport.authenticate('local', {
     failureFlash: true 
 }));
 
-app.get('/logout', (req, res) => {
-    req.logout();
-    res.redirect('/');
-});
-
 app.get('/register', (req, res) => {
     res.render('register', {});
 });
@@ -263,7 +261,7 @@ app.post('/register', (req, res) => {
 
     User.findOne({ username: username }, (err, user) => {
         if (err) {
-            console.log(err);
+            console.error(err);
             res.status(500).send('Error checking for existing user');
         } else if (user) {
             req.flash('error', 'Username already exists');
@@ -272,7 +270,7 @@ app.post('/register', (req, res) => {
             const newUser = new User({ username, password, email });
             newUser.save((err) => {
                 if (err) {
-                    console.log(err);
+                    console.error(err);
                     res.status(500).send('Error creating new user');
                 } else {
                     req.flash('success', 'User registered successfully');
@@ -296,7 +294,7 @@ app.get("*", (req, res) => {
 
 app.listen(port, (error) => {
     if (error) {
-        console.log("Issue in connecting to the server");
+        console.error("Issue in connecting to the server:", error);
     } else {
         console.log("Successfully connected to the server");
     }
