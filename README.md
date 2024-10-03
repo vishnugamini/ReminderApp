@@ -14,12 +14,12 @@ You can access the app [here](https://reminderapp-xi0i.onrender.com).
 
 ## Screenshots
 
-![Screenshot 1](imgs/pic-1)  
+![Screenshot 1](imgs/pic-1.png)  
 *Landing Page*
 
-![Screenshot 2](imgs/pic-2)  
+![Screenshot 2](imgs/pic-2.png)  
 *User Dashboard*
 
-![Screenshot 3](imgs/pic-3)  
+![Screenshot 3](imgs/pic-3.png)  
 *Review Page*
 
